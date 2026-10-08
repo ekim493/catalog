@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#F0ECE0">
+<title>Catalog</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>
+  // Apply the theme before first paint; no saved choice follows the system.
+  (function () {
+    var t = null;
+    try { t = JSON.parse(localStorage.getItem("catalog4.theme")); } catch (_) {}
+    if (t !== "dark" && t !== "light" && t !== "amoled") {
+      t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    if (t === "amoled") document.documentElement.dataset.amoled = "";
+    document.documentElement.dataset.theme = t === "light" ? "light" : "dark";
+    // iOS has no dark variant for Home Screen icons: it keeps whichever icon
+    // is linked when the page is added, so match the theme showing then.
+    if (t === "light") document.querySelector('link[rel="apple-touch-icon"]').href = "apple-touch-icon-light.png";
+  })();
+</script>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/base.css">
+<link rel="stylesheet" href="styles/components.css">
+<link rel="stylesheet" href="styles/ledger.css">
+<link rel="stylesheet" href="styles/details.css">
+<link rel="stylesheet" href="styles/form.css">
+<link rel="stylesheet" href="styles/tracker.css">
+<link rel="stylesheet" href="styles/stash.css">
+<link rel="stylesheet" href="styles/stats.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <img class="brand-logo logo-light" src="logo-light.svg" alt=""><img class="brand-logo logo-dark" src="logo-dark.svg" alt="">
+      <div class="brand-text">
+        <span class="brand-mark">Catalog</span>
+        <span class="brand-tag">Your personal collection</span>
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary btn-block" data-action="add">+ Add entry</button>
+    <nav class="nav" data-nav></nav>
+    <div class="sidebar-foot">
+      <button type="button" class="nav-link" data-action="settings"></button>
+      <span class="version" data-version></span>
+    </div>
+  </aside>
+
+  <header class="topbar">
+    <div class="brand"><img class="brand-logo logo-light" src="logo-light.svg" alt=""><img class="brand-logo logo-dark" src="logo-dark.svg" alt=""><span class="brand-mark">Catalog</span></div>
+  </header>
+
+  <main class="main">
+    <section class="view" id="view-ledger" hidden></section>
+    <section class="view" id="view-tracker" hidden></section>
+    <section class="view" id="view-stash" hidden></section>
+    <section class="view" id="view-stats" hidden></section>
+  </main>
+
+  <nav class="tabbar" data-tabbar></nav>
+</div>
+<div id="modal-root"></div>
+<div id="toast-root" aria-live="polite"></div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

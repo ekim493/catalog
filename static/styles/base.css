@@ -1,0 +1,221 @@
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 14px/1.45 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+body.modal-open { overflow: hidden; }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img { display: block; }
+h1, h2, h3, h4 { margin: 0; font-weight: 600; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.muted { color: var(--muted); }
+
+/* ---------- app shell ---------- */
+
+.app {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.6rem 1rem 1.2rem;
+  border-right: 1px solid var(--border);
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 31px, var(--border) 31px 32px) 0 0 / 100% 100%,
+    var(--surface-2);
+}
+.sidebar::before {
+  /* The ledger's ruled paper, faded so it reads as texture, not lines. */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--surface-2) 0%, color-mix(in srgb, var(--surface-2) 82%, transparent) 100%);
+  pointer-events: none;
+}
+.sidebar > * { position: relative; }
+
+.brand { display: flex; align-items: center; gap: 0.65rem; padding: 0 0.35rem; }
+/* The name and tagline together fit the logo's height. */
+.brand-text { display: flex; flex-direction: column; justify-content: space-between; height: 36px; min-width: 0; }
+.brand-logo { flex: none; width: 36px; height: 36px; }
+/* The logo follows the app's theme, not the system's. */
+:root[data-theme="dark"] .logo-light, :root:not([data-theme="dark"]) .logo-dark { display: none; }
+.brand-mark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.brand-tag { font-size: 0.72rem; line-height: 1; color: var(--muted); white-space: nowrap; }
+
+.nav { display: flex; flex-direction: column; gap: 0.15rem; }
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: var(--radius-sm);
+  color: var(--ink-2);
+  font-weight: 500;
+  text-decoration: none;
+}
+.nav-link:hover { background: var(--hover); text-decoration: none; }
+.nav-link.active { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-sm); }
+.nav-link.active svg { color: var(--accent); }
+
+.sidebar-foot { margin-top: auto; display: flex; flex-direction: column; gap: 0.25rem; }
+.sidebar-foot .nav-link { background: none; border: 0; width: 100%; text-align: left; }
+.version { padding: 0 0.7rem; font-size: 0.72rem; color: var(--faint); font-family: var(--font-mono); }
+
+.topbar, .tabbar { display: none; }
+
+.main { min-width: 0; padding: 2.5rem 2rem 4rem; }
+.view { max-width: var(--content-max); margin: 0 auto; }
+
+.view-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.view-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.7rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.view-subtitle { color: var(--muted); font-size: 0.85rem; margin-top: 0.35rem; }
+.view-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+.label-short { display: none; }
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 1.4rem 0 0.6rem;
+}
+/* Counts share the heading's font so they sit on the same baseline. */
+.section-heading .count { letter-spacing: 0; font-weight: 400; color: var(--faint); }
+
+/* ---------- phones ---------- */
+
+@media (max-width: 760px) {
+  .app { display: block; }
+  .sidebar { display: none; }
+  /* The brand bar scrolls away; only the status-bar area stays covered. */
+  .app::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    height: env(safe-area-inset-top);
+    background: var(--bg);
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    height: calc(var(--topbar-h) + env(safe-area-inset-top));
+    padding: env(safe-area-inset-top) max(1.25rem, env(safe-area-inset-right)) 0 max(1.25rem, env(safe-area-inset-left));
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar .brand { padding: 0; gap: 0.55rem; }
+  .topbar .brand-logo { width: 30px; height: 30px; }
+  .topbar .brand-mark { font-size: 1.25rem; }
+  /* Pulled out by the icon's own inset so its glyph lines up with the content edge. */
+  .topbar-settings { margin-left: auto; margin-right: -0.45rem; }
+  .main {
+    padding: 1.75rem max(1.25rem, env(safe-area-inset-right)) calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 1.5rem)
+      max(1.25rem, env(safe-area-inset-left));
+  }
+  .view-title { font-size: 1.6rem; }
+  /* Header actions stay beside the title; long labels shorten on phones. */
+  .view-header { flex-wrap: nowrap; margin-bottom: 1.2rem; }
+  .view-actions .check { white-space: nowrap; }
+  .label-long { display: none; }
+  .label-short { display: inline; }
+  .tabbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    align-items: stretch;
+    height: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom);
+    background: color-mix(in srgb, var(--surface) 90%, transparent);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid var(--border);
+  }
+  .tab-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--muted);
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .tab-add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+  .tab-add-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 44px;
+    border-radius: var(--radius);
+    background: var(--primary);
+    color: var(--primary-ink);
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--primary) 35%, transparent);
+    transition: transform 0.1s ease;
+  }
+  .tab-add:active .tab-add-mark { transform: scale(0.94); }
+  .tab-link:hover { text-decoration: none; }
+  .tab-link.active { color: var(--ink); }
+  .tab-link.active svg { color: var(--accent); }
+}

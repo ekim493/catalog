@@ -1,0 +1,65 @@
+.details-modal .modal-title { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.details-hero { display: flex; gap: 1rem; align-items: flex-start; }
+.details-hero .poster { width: 96px; box-shadow: var(--shadow); border-radius: var(--radius-sm); }
+.details-heading { flex: 1; min-width: 0; }
+.details-title { font-size: 1.3rem; line-height: 1.2; overflow-wrap: anywhere; }
+.details-synonym { color: var(--muted); margin-top: 0.2rem; }
+.details-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+/* The source's release status is the headline fact, so it stands apart. */
+.details-release {
+  display: flex;
+  width: fit-content;
+  height: 1.9rem;
+  margin-top: 0.75rem;
+  padding: 0 0.75rem;
+  background: color-mix(in srgb, var(--c) 12%, transparent);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.release {
+  --c: var(--muted);
+  border: 1px solid color-mix(in srgb, var(--c) 45%, transparent);
+  color: var(--c);
+}
+.release-ongoing { --c: var(--green); }
+.release-returning { --c: var(--blue); }
+.release-hiatus { --c: var(--amber); }
+.release-finished { --c: var(--teal); }
+.release-upcoming { --c: var(--plum); }
+.release-cancelled { --c: var(--red); }
+
+
+.details-grid {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.45rem 1.25rem;
+  margin: 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+.details-row { display: contents; }
+.details-row dt { color: var(--muted); font-size: 0.82rem; }
+.details-row dd { margin: 0; font-size: 0.88rem; overflow-wrap: anywhere; }
+.details-links { display: inline-flex; flex-wrap: wrap; gap: 0.2rem 0.8rem; }
+.details-links a { display: inline-flex; align-items: center; gap: 0.25rem; }
+.details-notes p { margin: 0; white-space: pre-wrap; line-height: 1.5; }
+.details-notes .section-heading, .details-modal .section-heading { margin-top: 0; }
+.details-members { max-height: 340px; }
+
+.btn-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--teal);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+.btn-link:hover { text-decoration: underline; }
+
+@media (max-width: 760px) {
+  .details-hero .poster { width: 78px; }
+  .details-title { font-size: 1.15rem; }
+}

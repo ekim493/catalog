@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="72 76 336 336"><style>.c2{fill:#C6B487}.c3{fill:#9C3B3B}.c4{fill:#3F6B63}.c5{fill:#26313D}.c6{fill:#F6F2E7}.c7{fill:#9C3B3B}.c8{fill:#3F6B63}.c9{fill:#3F6B63}@media (prefers-color-scheme: dark){.c2{fill:#A5946C}.c3{fill:#C16A60}.c4{fill:#588C7E}.c5{fill:#7C8993}.c6{fill:#E6DFCE}.c7{fill:#C16A60}.c8{fill:#588C7E}.c9{fill:#588C7E}}</style><rect x="144" y="120" width="244" height="254" rx="27" class="c2"/>
+<path d="M300 120v-24a12 12 0 0 1 12-12h44a12 12 0 0 1 12 12v24" class="c3"/>
+<rect x="118" y="143" width="248" height="247" rx="26" class="c4"/>
+<rect x="92" y="168" width="250" height="236" rx="26" class="c5"/>
+<rect x="92" y="160" width="250" height="226" rx="26" class="c6"/>
+<rect x="128" y="208" width="88" height="17" rx="8.5" class="c7"/>
+<rect x="128" y="254" width="177" height="15" rx="7.5" class="c8"/>
+<rect x="128" y="290" width="132" height="15" rx="7.5" class="c9"/></svg>

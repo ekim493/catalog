@@ -1,0 +1,14 @@
+# Live catalog data, rebuildable caches, and backups.
+data/
+
+# Local settings may contain API keys.
+.env
+
+# Local AI-assistant configuration and notes.
+.claude/
+CLAUDE.md
+AGENTS.md
+
+__pycache__/
+*.pyc
+.DS_Store

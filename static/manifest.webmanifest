@@ -1,0 +1,14 @@
+{
+  "name": "Catalog",
+  "short_name": "Catalog",
+  "description": "Your personal collection",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F0ECE0",
+  "theme_color": "#F0ECE0",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "apple-touch-icon.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

@@ -1,0 +1,204 @@
+/* Tracker view: Shows / Comics / Upcoming. Scoped to #view-tracker or
+   .tracker-* classes (the episode info modal renders outside the view). */
+
+#view-tracker {
+  /* Fixed so every card's right edge lines up across sections. */
+  --tracker-action-w: 8.5rem;
+  --tracker-poster-w: 56px;
+}
+
+/* ---------- toolbar ---------- */
+
+.tracker-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 0.25rem;
+}
+.tracker-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.1rem;
+}
+#view-tracker .tracker-sort {
+  width: auto;
+  min-height: 34px;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  font-size: 0.85rem;
+}
+
+/* ---------- sections ---------- */
+
+#view-tracker .tracker-section-toggle {
+  width: 100%;
+  padding: 0.2rem 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  user-select: none;
+}
+#view-tracker .tracker-section-toggle:hover { color: var(--ink-2); }
+.tracker-section-toggle svg { flex: none; transition: transform 0.15s ease; }
+.tracker-section-toggle[aria-expanded="false"] svg { transform: rotate(-90deg); }
+
+.tracker-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 430px), 1fr));
+  gap: 0.6rem;
+}
+
+/* ---------- cards ---------- */
+
+.tracker-card {
+  display: grid;
+  grid-template-columns: var(--tracker-poster-w) minmax(0, 1fr) var(--tracker-action-w);
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.7rem 0.75rem;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+.tracker-card:hover { border-color: var(--border-strong); }
+#view-tracker .tracker-poster { width: var(--tracker-poster-w); }
+
+.tracker-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.tracker-title {
+  align-self: flex-start;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+button.tracker-title:hover { text-decoration: underline; text-underline-offset: 2px; }
+.tracker-sub { color: var(--muted); font-size: 0.8rem; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tracker-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0.1rem 0; }
+.tracker-line { color: var(--muted); font-size: 0.8rem; line-height: 1.35; overflow-wrap: anywhere; }
+
+.tracker-card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.4rem;
+  min-width: 0;
+}
+.tracker-card-actions .btn {
+  width: 100%;
+  padding-left: 0.45rem;
+  padding-right: 0.45rem;
+  white-space: normal; /* a long label wraps rather than widening the column */
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* The next-episode quick action carries a separate overlaid info control. */
+.tracker-primary-wrap { position: relative; }
+.tracker-card-actions .tracker-primary-wrap > .btn { padding-left: 1.1rem; padding-right: 1.75rem; }
+.tracker-info-btn {
+  position: absolute;
+  top: 50%;
+  right: 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  padding: 0;
+  transform: translateY(-50%);
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--primary-ink);
+  font: 600 0.68rem/1 var(--font-mono);
+  opacity: 0.8;
+}
+.tracker-info-btn::after { content: ""; position: absolute; inset: -7px; } /* larger tap target */
+.tracker-info-btn:hover {
+  opacity: 1;
+  background: color-mix(in srgb, var(--primary-ink) 16%, transparent);
+}
+
+/* Brief highlight when jumping to a card from the Ledger. */
+.tracker-flash { animation: tracker-flash 2s ease; }
+@keyframes tracker-flash {
+  0%, 55% {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+}
+
+#view-tracker .tracker-empty { padding: 2.5rem 1rem; }
+
+/* ---------- upcoming ---------- */
+
+#view-tracker .tracker-day.is-today .section-heading { color: var(--accent); }
+#view-tracker .tracker-day.is-past .section-heading { color: var(--faint); }
+.tracker-day-list { overflow: hidden; }
+.tracker-up-row {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.65rem 0.85rem;
+}
+.tracker-day-list > .tracker-up-row { border-bottom: 1px solid var(--border); }
+.tracker-day-list > .tracker-up-row:last-child { border-bottom: 0; }
+#view-tracker .tracker-up-poster { width: 40px; }
+.tracker-up-main { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
+.tracker-up-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.55rem;
+}
+.tracker-up-what { color: var(--ink-2); font-size: 0.82rem; overflow-wrap: anywhere; }
+.tracker-up-what.is-estimate { color: var(--muted); font-style: italic; }
+.tracker-up-when {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-align: right;
+  white-space: nowrap;
+}
+.tracker-up-when.is-time { color: var(--ink); font-weight: 500; }
+
+/* ---------- episode info modal ---------- */
+
+.tracker-episode { display: flex; flex-direction: column; gap: 0.35rem; }
+.tracker-episode-name { font-size: 1rem; line-height: 1.3; }
+.tracker-episode-meta { color: var(--muted); font-family: var(--font-mono); font-size: 0.8rem; }
+.tracker-episode-overview { margin: 0.35rem 0 0; color: var(--ink-2); line-height: 1.55; }
+
+/* ---------- phones ---------- */
+
+@media (max-width: 760px) {
+  #view-tracker {
+    --tracker-action-w: 7.25rem;
+    --tracker-poster-w: 48px;
+  }
+  .tracker-toolbar { gap: 0.6rem; }
+  #view-tracker .tracker-tabs { display: flex; width: 100%; }
+  #view-tracker .tracker-tabs button { flex: 1; justify-content: center; }
+  .tracker-filters { width: 100%; gap: 0.5rem 1rem; }
+  #view-tracker .tracker-sort { margin-left: auto; max-width: 11rem; min-height: 44px; font-size: 0.92rem; }
+  .tracker-card { gap: 0.8rem; padding: 0.85rem 0.75rem; }
+  .tracker-card-actions .tracker-primary-wrap > .btn { padding-left: 0.4rem; padding-right: 1.6rem; }
+  .tracker-title { font-size: 0.92rem; }
+  .tracker-line { font-size: 0.78rem; }
+  .tracker-up-row { grid-template-columns: 34px minmax(0, 1fr) auto; gap: 0.65rem; padding: 0.65rem 0.75rem; }
+  #view-tracker .tracker-up-poster { width: 34px; }
+}

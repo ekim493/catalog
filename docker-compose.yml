@@ -1,0 +1,33 @@
+services:
+  catalog:
+    build: .
+    container_name: catalog
+    ports:
+      - "${PORT:-8000}:${PORT:-8000}"
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    environment:
+      PORT: "${PORT:-8000}"
+      TMDB_API_KEY: "${TMDB_API_KEY:-}"
+      CATALOG_BACKUP_DIR: "${CATALOG_BACKUP_DIR:-}"
+      ALLOW_CUSTOM_DATE_ADDED: "${ALLOW_CUSTOM_DATE_ADDED:-False}"
+      HIDDEN_CATEGORIES: "${HIDDEN_CATEGORIES:-}"
+    volumes:
+      - ./data:/app/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: "${CLOUDFLARE_TUNNEL_TOKEN}"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

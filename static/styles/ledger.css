@@ -1,0 +1,242 @@
+.ledger-toolbar {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.ledger-search {
+  position: relative;
+  flex: 1 1 260px;
+  display: flex;
+  align-items: center;
+  color: var(--faint);
+}
+.ledger-search svg { position: absolute; left: 0.7rem; pointer-events: none; }
+.ledger-search-input { padding-left: 2.2rem; }
+.ledger-controls { display: flex; gap: 0.5rem; align-items: center; }
+.ledger-type-filter .select { width: auto; min-width: 9.5rem; }
+.ledger-sort { display: flex; gap: 0.25rem; align-items: center; }
+.ledger-sort .select { width: auto; min-width: 9.5rem; }
+.ledger-dir { border: 1px solid var(--border-strong); width: 38px; height: 38px; background: var(--surface); }
+.ledger-status { margin-bottom: 1rem; }
+
+/* ---------- list ---------- */
+
+.ledger-list {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.ledger-row {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto 2.2rem auto;
+  grid-template-areas: "poster main meta rating actions";
+  align-items: center;
+  gap: 0 0.75rem;
+  min-height: 68px;
+  padding: 0.5rem 0.6rem 0.5rem 0.85rem;
+  border-bottom: 1px solid var(--border);
+  --row-bg: var(--surface);
+  background: var(--row-bg);
+}
+.ledger-row:last-child { border-bottom: 0; }
+.ledger-row:hover, .ledger-row.is-group.is-open, .ledger-row.is-child { --row-bg: var(--surface-2); }
+.ledger-row > .poster { grid-area: poster; }
+.ledger-foot { display: contents; }
+.ledger-foot > .stamp, .ledger-foot > .rate-btn { grid-area: rating; justify-self: center; }
+.ledger-main { grid-area: main; display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
+.ledger-meta { grid-area: meta; display: flex; align-items: center; gap: 0.4rem; justify-content: flex-end; min-width: 0; }
+.ledger-actions { grid-area: actions; display: flex; justify-content: flex-end; min-width: 68px; }
+
+.ledger-title {
+  display: block;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ledger-titleline { display: flex; align-items: center; gap: 0.45rem; min-width: 0; }
+.ledger-titleline .ledger-title { flex: 0 1 auto; min-width: 0; }
+/* Type tags are tan wherever they appear; the one beside a title is smaller. */
+.ledger-type { flex: none; background: var(--tag-bg); color: var(--muted); }
+.ledger-type-title { height: 1.25rem; padding: 0 0.45rem; border-radius: 5px; font-size: 0.64rem; }
+.ledger-type .type-short, .ledger-meta .ledger-type-meta { display: none; }
+button.ledger-title:hover, a.ledger-title:hover { color: var(--accent); text-decoration: none; }
+.ledger-sub { color: var(--muted); font-size: 0.8rem; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Fixed widths keep the status and date columns aligned row to row. */
+.ledger-meta .status { padding: 0 0.42rem; }
+.ledger-meta .status, .status-slot { min-width: 4.3rem; }
+.status-slot { display: inline-block; }
+.ledger-date {
+  min-width: 4.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-align: right;
+  white-space: nowrap;
+}
+.date-mask { color: var(--faint); }
+
+/* The stacked-cover edge is cut from the row's own background. */
+.ledger-row.is-group .poster-stack { box-shadow: 3px -3px 0 -1px var(--row-bg), 3px -3px 0 0 var(--border-strong); }
+.ledger-row.is-child {
+  grid-template-columns: 32px minmax(0, 1fr) auto 2.2rem auto;
+  padding-left: 2.2rem;
+}
+.ledger-row.is-child .poster { width: 32px; }
+.ledger-row.is-source-member .ledger-title { font-weight: 500; }
+
+/* ---------- grid ---------- */
+
+.ledger-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols, 4), minmax(0, 1fr));
+  gap: 1.5rem 1rem;
+}
+.ledger-card { display: flex; flex-direction: column; gap: 0.55rem; min-width: 0; }
+.ledger-card-art { position: relative; }
+.ledger-card-cover {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+}
+.ledger-card .poster {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.ledger-card-cover:hover .poster { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.ledger-card.is-group .poster {
+  box-shadow: 5px -5px 0 -1px var(--bg), 5px -5px 0 0 var(--border-strong), var(--shadow);
+}
+/* Fixed paper colors in both themes: the stamp sits on artwork, not the page. */
+.ledger-card-art .stamp {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 2.2rem;
+  height: 1.65rem;
+  border-color: #A23E3E;
+  background: #FBF7EE;
+  color: #A23E3E;
+  font-size: 0.92rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+.ledger-card-count {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  height: 1.4rem;
+  padding: 0 0.45rem;
+  border-radius: var(--radius-xs);
+  background: color-mix(in srgb, #1F2731 85%, transparent);
+  color: #FBF9F4;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+.ledger-card-text { flex: 1; display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+.ledger-card-title {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.88rem;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ledger-card-title:hover { color: var(--accent); }
+/* Two text lines at most: a title with an alias gets one line of its own. */
+.ledger-card-text.has-sub .ledger-card-title { -webkit-line-clamp: 1; }
+.ledger-card-sub { color: var(--muted); font-size: 0.76rem; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ledger-card-foot { display: flex; flex-direction: column; gap: 0.35rem; }
+.ledger-card-tags { display: flex; gap: 0.35rem; min-width: 0; }
+.ledger-card-tags .ledger-type-meta { flex: none; }
+.ledger-card-foot .ledger-date { min-width: 0; text-align: left; }
+.ledger-card-row { display: flex; align-items: center; justify-content: space-between; gap: 0.25rem; }
+.ledger-card-actions { display: flex; margin-right: -0.35rem; }
+
+/* ---------- pager ---------- */
+
+.ledger-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.ledger-pager:empty { display: none; }
+.pager-info { color: var(--muted); font-size: 0.82rem; font-family: var(--font-mono); }
+.pager-controls { display: flex; align-items: center; gap: 0.2rem; }
+.pager-select { width: auto; min-height: 32px; padding-top: 0.2rem; padding-bottom: 0.2rem; }
+.pager-total { color: var(--muted); font-size: 0.82rem; margin: 0 0.3rem; }
+
+@media (max-width: 760px) {
+  .ledger-search { flex-basis: 100%; }
+  .ledger-controls { width: 100%; }
+  .ledger-type-filter { flex: 1 1 0; }
+  .ledger-type-filter .select, .ledger-sort .select { width: 100%; min-width: 0; }
+  .ledger-sort { flex: 1.6 1 0; }
+  .ledger-status { flex-wrap: nowrap; overflow-x: auto; margin: 0 -1.25rem 1.1rem; padding: 0 1.25rem 2px; scrollbar-width: none; }
+  .ledger-status .chip { min-height: 36px; padding: 0 0.85rem; }
+  .ledger-toolbar { gap: 0.6rem; margin-bottom: 0.9rem; }
+  .ledger-toolbar .input, .ledger-toolbar .select { min-height: 44px; }
+  .ledger-dir { width: 44px; height: 44px; }
+  /* Too wide for one line on a phone: stack the count over centred controls. */
+  .ledger-pager { flex-direction: column; justify-content: center; gap: 0.5rem; }
+  .ledger-status::-webkit-scrollbar { display: none; }
+
+  /* Poster beside the title; status, date, rating and actions get a
+     full-width line of their own underneath. */
+  .ledger-row, .ledger-row.is-child {
+    --mark-h: 1.5rem;
+    grid-template-columns: 44px minmax(0, 1fr);
+    grid-template-areas: "poster main" "foot foot";
+    gap: 0.7rem 0.85rem;
+    padding: 0.85rem 0.55rem 0.7rem 0.9rem;
+  }
+  .ledger-row > .poster { width: 44px; }
+  .ledger-row.is-child { grid-template-columns: 36px minmax(0, 1fr); padding-left: 1.6rem; }
+  .ledger-row.is-child .poster { width: 36px; }
+  .ledger-foot { grid-area: foot; display: flex; align-items: center; gap: 0.35rem; min-width: 0; }
+  .ledger-foot .ledger-actions { margin-left: auto; min-width: 0; }
+  .ledger-title { font-size: 1rem; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .ledger-titleline .ledger-type-title { display: none; }
+  .ledger-meta .ledger-type-meta { display: inline-flex; max-width: 5rem; padding: 0 0.45rem; }
+  .ledger-type .type-long { overflow: hidden; text-overflow: ellipsis; }
+  .ledger-type.has-short .type-long { display: none; }
+  .ledger-type.has-short .type-short { display: inline; }
+  .ledger-meta { justify-content: flex-start; flex-wrap: nowrap; gap: 0.35rem; overflow: hidden; }
+  .ledger-meta .status { min-width: 0; flex: none; padding: 0 0.45rem; }
+  .status-slot { display: none; }
+  .ledger-date { min-width: 0; text-align: left; }
+  .ledger-sub { font-size: 0.82rem; }
+  .ledger-grid { gap: 1.25rem 1rem; }
+}
+
+/* Narrow phones: the type tag gives way so the line never clips. */
+@media (max-width: 369px) {
+  .ledger-meta .ledger-type-meta { display: none; }
+}

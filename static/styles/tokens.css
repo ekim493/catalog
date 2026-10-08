@@ -1,0 +1,103 @@
+:root {
+  color-scheme: light;
+  --bg: #F0ECE0;
+  --bg-sunken: #E8E1D0;
+  --surface: #FBF9F3;
+  --surface-2: #F4F0E6;
+  --border: #DED6C4;
+  --border-strong: #CABD9F;
+  --ink: #1F2731;
+  --ink-2: #3B4653;
+  --muted: #736B5E;
+  --faint: #A49C8D;
+  --primary: #26313D;
+  --primary-hover: #36424F;
+  --primary-ink: #FBF9F4;
+  --accent: #A23E3E;
+  --focus: rgba(62, 101, 145, 0.35);
+  --hover: rgba(31, 39, 49, 0.05);
+  --overlay: rgba(24, 22, 18, 0.42);
+
+  --teal: #3F6B63;
+  --blue: #3E6591;
+  --amber: #9C5E06;
+  --plum: #87506B;
+  --red: #A23E3E;
+  --green: #3F7A4A;
+
+  --status-started: var(--blue);
+  --status-finished: var(--teal);
+  --status-planned: #7A7264;
+  --status-on_hold: var(--amber);
+  --status-dropped: var(--red);
+  --date-added: var(--muted);
+  --date-released: var(--amber);
+  --date-ended: var(--plum);
+  --date-complete: var(--teal);
+
+  --tag-bg: #E4DAC3; /* the small type tag beside titles */
+  --radius-xs: 4px;
+  --mark-h: 1.4rem; /* tags, status labels and rating stamps */
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px rgba(31, 39, 49, 0.06);
+  --shadow: 0 1px 2px rgba(31, 39, 49, 0.05), 0 6px 20px rgba(31, 39, 49, 0.06);
+  --shadow-lg: 0 24px 60px rgba(24, 22, 18, 0.22);
+
+  --font-display: 'Courier Prime', 'Courier New', monospace;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --sidebar-w: 228px;
+  --topbar-h: 56px;
+  --tabbar-h: 60px;
+  --content-max: 1080px;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  /* Warm notebook browns. */
+  --bg: #221D17;
+  --bg-sunken: #1C1813;
+  --surface: #2B261F;
+  --surface-2: #332D25;
+  --border: #433C31;
+  --border-strong: #5A503F;
+  --ink: #ECE5D5;
+  --ink-2: #D2CAB8;
+  --muted: #A69C88;
+  --faint: #7A7163;
+  --tag-bg: #3B3429;
+  --primary: #E8DFCB;
+  --primary-hover: #F5EEDC;
+  --primary-ink: #1B1812;
+  --accent: #D9776B;
+  --focus: rgba(127, 170, 214, 0.4);
+  --hover: rgba(236, 229, 213, 0.06);
+  --overlay: rgba(0, 0, 0, 0.58);
+
+  --teal: #7FB2A5;
+  --blue: #86AAD6;
+  --amber: #D9AB6A;
+  --plum: #D39AB6;
+  --red: #D9776B;
+  --green: #8CC39A;
+  --status-planned: #A69C88;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+/* AMOLED: the dark palette on true black, with the warmth kept in borders. */
+:root[data-theme="dark"][data-amoled] {
+  --bg: #000000;
+  --bg-sunken: #000000;
+  --surface: #15120F;
+  --surface-2: #1D1A16;
+  --border: #322C25;
+  --border-strong: #4A4238;
+  --tag-bg: #231F1A;
+  --overlay: rgba(0, 0, 0, 0.72);
+}
